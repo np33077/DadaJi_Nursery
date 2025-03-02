@@ -17,6 +17,7 @@ return new class extends Migration {
             $table->enum('job_type', ['Sowing', 'Watering', 'Delivery']);
             $table->decimal('salary', 10, 2);
             $table->date('hired_date');
+            $table->enum("status", ["Y", "N"])->default("Y"); // Y for sowing done, N for sowing pending
             $table->timestamps();
         });
     }

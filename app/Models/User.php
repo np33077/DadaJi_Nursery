@@ -6,12 +6,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
-use Tymon\JWTAuth\Contracts\JWTSubject;
+use Illuminate\Support\Facades\Auth;
+use Laravel\Passport\HasApiTokens;
 
 class User extends Authenticatable
 {
-
+    use HasApiTokens, HasFactory, Notifiable;
     protected $table = "users";
     public $timestamps = false;
 
@@ -46,8 +46,15 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function getJWTIdentifier()
+
+    public static function isUserValid()
     {
-        return $this->getKey();
+        $user = Auth::user();
+        if (empty($user)) {
+            return response()->json(['status' => trans('messages.ERROR'), 'message' => trans('messages.UNAUTHORIZED')], 401);
+        }
+        $user_detail =  User::where('id', $user->id)->first();
+        return $user_detail;
     }
+
 }
