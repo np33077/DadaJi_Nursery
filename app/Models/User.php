@@ -50,4 +50,10 @@ class User extends Authenticatable
     {
         return $this->getKey();
     }
+
+    public function test()
+    {
+        echo "helel-p";
+        exit;
+    }
 }
