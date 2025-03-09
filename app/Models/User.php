@@ -57,4 +57,9 @@ class User extends Authenticatable
         return $user_detail;
     }
 
+    public function test()
+    {
+        echo "helel-p";
+        exit;
+    }
 }
