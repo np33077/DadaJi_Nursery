@@ -21,8 +21,8 @@ class UserSeeder extends Seeder
             [
                 'name' => 'Super Admin',
                 'email' => 'superadmin@gmail.com',
-                'password' => md5('superadmin@123'), // Change password as needed
-                'role' => 'Super_Admin',
+                'password' => bcrypt('superadmin@123'), // Use bcrypt for password hashing
+                'role' => 'Admin', // Corrected role to match the table's enum values
                 'status' => 'Y',
             ]
         );
@@ -33,8 +33,20 @@ class UserSeeder extends Seeder
             [
                 'name' => 'Admin User',
                 'email' => 'admin@gmail.com',
-                'password' => md5('admin@123'), // Change password as needed
+                'password' => bcrypt('admin@123'), // Use bcrypt for password hashing
                 'role' => 'Admin',
+                'status' => 'Y',
+            ]
+        );
+
+        // Create Farmer
+        User::updateOrCreate(
+            ['email' => 'farmer@gmail.com'], // Unique constraint
+            [
+                'name' => 'Farmer User', // Corrected name to match the role
+                'email' => 'farmer@gmail.com',
+                'password' => bcrypt('farmer@123'), // Use bcrypt for password hashing
+                'role' => 'Farmer',
                 'status' => 'Y',
             ]
         );

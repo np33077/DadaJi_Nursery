@@ -12,9 +12,11 @@ return new class extends Migration {
     {
         Schema::create('seed_sowing', function (Blueprint $table) {
             $table->id();
-            $table->string('plant_name');
-            $table->string('variety');
-            $table->integer('sowing_duration'); // Duration in days (e.g., 30 for Tomato)
+            $table->integer('plant_id'); // Duration in days (e.g., 30 for Tomato)
+            $table->date('sowing_date'); // Duration in days (e.g., 30 for Tomato)
+            $table->date('expected_harvest_date'); // Duration in days (e.g., 30 for Tomato)
+            $table->integer('quantity');
+            $table->text('remarks')->nullable();
             $table->enum("status", ["Y", "N"])->default("Y"); // Y for sowing done, N for sowing pending
             $table->timestamps();
         });

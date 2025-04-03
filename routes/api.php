@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\laborsController;
+use App\Http\Controllers\PlantController;
 use App\Http\Controllers\SeedSowingController;
 
 /*
@@ -36,6 +37,14 @@ Route::group(['middleware' => 'auth:api'], function ($router) {
     Route::get('/labor-pagination-list', [laborsController::class, 'paginationlist']);
     Route::get('/labor-details/{id}', [laborsController::class, 'details']);
     Route::put('/update-labor-status', [laborsController::class, 'updateStatus']);
+
+    // ========================== Plant APIs ========================= //
+
+    Route::post('/add-plant', [PlantController::class, 'add']);
+    Route::put('/edit-plant', [PlantController::class, 'edit']);
+    Route::get('/plant-pagination-list', [PlantController::class, 'paginationlist']);
+    Route::get('/plant-details/{id}', [PlantController::class, 'details']);
+    Route::put('/update-plant-status', [PlantController::class, 'updateStatus']);
 
     // ========================== Seed Sowing  APIs ========================= //
 

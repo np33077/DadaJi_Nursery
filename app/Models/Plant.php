@@ -5,10 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class SeedSowing extends Model
+class Plant extends Model
 {
     use HasFactory;
-    protected $table = "seed_sowing";
+    protected $table = "plant";
     public $timestamps = true;
 
     public static function list($index, $limit, $request)
@@ -17,11 +17,11 @@ class SeedSowing extends Model
         $sort_by  = $request->query('sort_by');
         $order_by = $request->query('order_by');
         $query    = self::select("*")->where('status', 'Y');
-        // if (!empty($keyword)) {
-        //     $query->where(function ($q) use ($keyword) {
-        //         $q->where("plant_name", 'LIKE', "%$keyword%");
-        //     });
-        // }
+        if (!empty($keyword)) {
+            $query->where(function ($q) use ($keyword) {
+                $q->where("plant_name", 'LIKE', "%$keyword%");
+            });
+        }
 
         if ($index != -1) {
             if (!empty($sort_by) && !empty($order_by)) {
