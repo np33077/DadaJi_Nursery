@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ExpenseController;
+use App\Http\Controllers\IncomeController;
 use App\Http\Controllers\laborsController;
 use App\Http\Controllers\PlantBookingController;
 use App\Http\Controllers\PlantController;
@@ -69,4 +70,12 @@ Route::group(['middleware' => 'auth:api'], function ($router) {
     Route::get('/expense-pagination-list', [ExpenseController::class, 'paginationlist']);
     Route::get('/expense-details/{id}', [ExpenseController::class, 'details']);
     // Route::put('/update-expense-status', [ExpenseController::class, 'updateStatus']);
+
+    // ========================== Income APIs ========================= //
+
+    Route::post('/add-income', [IncomeController::class, 'add']);
+    Route::put('/edit-income', [IncomeController::class, 'edit']);
+    Route::get('/income-pagination-list', [IncomeController::class, 'paginationlist']);
+    Route::get('/income-details/{id}', [IncomeController::class, 'details']);
+    Route::put('/update-income-status', [IncomeController::class, 'updateStatus']);
 });
