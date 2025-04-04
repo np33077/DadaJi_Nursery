@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ExpenseController;
 use App\Http\Controllers\laborsController;
 use App\Http\Controllers\PlantBookingController;
 use App\Http\Controllers\PlantController;
@@ -61,4 +62,11 @@ Route::group(['middleware' => 'auth:api'], function ($router) {
     Route::get('/plant-booking-pagination-list', [PlantBookingController::class, 'paginationlist']);
     Route::get('/plant-booking-details/{id}', [PlantBookingController::class, 'details']);
     Route::put('/update-plant-booking-status', [PlantBookingController::class, 'updateStatus']);
+
+    // ========================== Expense APIs ========================= //
+    Route::post('/add-expense', [ExpenseController::class, 'add']);
+    Route::put('/edit-expense', [ExpenseController::class, 'edit']);
+    Route::get('/expense-pagination-list', [ExpenseController::class, 'paginationlist']);
+    Route::get('/expense-details/{id}', [ExpenseController::class, 'details']);
+    // Route::put('/update-expense-status', [ExpenseController::class, 'updateStatus']);
 });
