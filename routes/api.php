@@ -7,7 +7,10 @@ use App\Http\Controllers\IncomeController;
 use App\Http\Controllers\laborsController;
 use App\Http\Controllers\PlantBookingController;
 use App\Http\Controllers\PlantController;
+use App\Http\Controllers\SeedsDispatchController;
 use App\Http\Controllers\SeedSowingController;
+use App\Http\Controllers\TransactionsController;
+use App\Models\Transactions;
 
 /*
 |--------------------------------------------------------------------------
@@ -79,6 +82,22 @@ Route::group(['middleware' => 'auth:api'], function ($router) {
     Route::get('/income-pagination-list', [IncomeController::class, 'paginationlist']);
     Route::get('/income-details/{id}', [IncomeController::class, 'details']);
     Route::put('/update-income-status', [IncomeController::class, 'updateStatus']);
+
+    // ========================== Transactions APIs ========================= //
+
+    Route::post('/add-transaction', [TransactionsController::class, 'add']);
+    Route::put('/edit-income', [TransactionsController::class, 'edit']);
+    Route::get('/transaction-pagination-list', [TransactionsController::class, 'paginationlist']);
+    Route::get('/transaction-details/{id}', [TransactionsController::class, 'details']);
+    Route::put('/update-transaction-status', [TransactionsController::class, 'updateStatus']);
+
+    // ========================== Seeds Dispatch Controller APIs ========================= //
+
+    Route::post('/add-seedsdispatch', [SeedsDispatchController::class, 'add']);
+    Route::put('/edit-seedsdispatch', [SeedsDispatchController::class, 'edit']);
+    Route::get('/seedsdispatch-pagination-list', [SeedsDispatchController::class, 'paginationlist']);
+    Route::get('/seedsdispatch-details/{id}', [SeedsDispatchController::class, 'details']);
+    Route::put('/update-seedsdispatch-status', [SeedsDispatchController::class, 'updateStatus']);
 
     // ========================== Farmer APIs ========================= //
     Route::post('/save-farmer' , [AuthController::class, 'addFarmer']);

@@ -3,35 +3,38 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\Helper;
-use App\Models\SeedSowing;
+use App\Models\SeedsDispatch;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-class SeedSowingController extends Controller
+class SeedsDispatchController extends Controller
 {
     public function add(Request $request)
     {
         $validate = Validator::make($request->all(), [
-            "plant_id"              => 'required',
-            "sowing_date"           => 'required',
-            "expected_harvest_date" => 'required',
-            "quantity"              => 'required',
+            "plant_type"     => 'required',
+            "quantity"       => 'required',
+            "sold_to"        => 'required',
+            "price_per_unit" => 'required',
+            "total_price"    => 'required',
+            "receiver_id"    => 'required',
         ]);
 
         if ($validate->fails()) {
             return response()->json(["message" => $validate->errors()->first()], 400);
         }
 
-        $data = new SeedSowing();
-        $data->plant_id              = $request->plant_id;
-        $data->sowing_date           = $request->sowing_date;
-        $data->expected_harvest_date = $request->expected_harvest_date;
-        $data->quantity              = $request->quantity;
-        $data->remarks               = $request->remarks ?? "";
-        $data->created_at            = Carbon::now();
+        $data = new SeedsDispatch();
+        $data->plant_type     = $request->plant_type;
+        $data->quantity       = $request->quantity;
+        $data->sold_to        = $request->sold_to;
+        $data->price_per_unit = $request->price_per_unit;
+        $data->total_price    = $request->total_price;
+        $data->receiver_id    = $request->receiver_id;
+        $data->created_at     = Carbon::now();
         $data->save();
-        return response()->json(['message' => trans('messages.ADDED_SUCESSFULLY', ['title' =>  'Seed Sowing'])], 200);
+        return response()->json(['message' => trans('messages.ADDED_SUCESSFULLY', ['title' =>  'Seeds Dispatch'])], 200);
     }
 
     public function edit(Request $request)
@@ -43,16 +46,17 @@ class SeedSowingController extends Controller
         if ($validate->fails()) {
             return response()->json(["message" => $validate->errors()->first()], 400);
         }
-        $query  = SeedSowing::where('id', $request->id)->first();
+        $query  = SeedsDispatch::where('id', $request->id)->first();
         if (!empty($query)) {
-            $query->plant_id              = $request->plant_id ?? $query->plant_id;
-            $query->sowing_date           = $request->sowing_date ?? $query->sowing_date;
-            $query->expected_harvest_date = $request->expected_harvest_date ?? $query->expected_harvest_date;
-            $query->quantity              = $request->quantity ?? $query->quantity;
-            $query->remarks               = $request->remarks ?? $query->remarks;
-            $query->updated_at      = Carbon::now();
+            $query->plant_type     = $request->plant_type ?? $query->plant_type;
+            $query->quantity       = $request->quantity ?? $query->quantity;
+            $query->sold_to        = $request->sold_to ?? $query->sold_to;
+            $query->price_per_unit = $request->price_per_unit ?? $query->price_per_unit;
+            $query->total_price    = $request->total_price ?? $query->total_price;
+            $query->receiver_id    = $request->receiver_id ?? $query->receiver_id;
+            $query->updated_at     = Carbon::now();
             $query->save();
-            return response()->json(['message' => trans('messages.UPDATE_SUCESSFULLY', ['title' => 'Seed Sowing'])], 200);
+            return response()->json(['message' => trans('messages.UPDATE_SUCESSFULLY', ['title' => 'Seeds Dispatch'])], 200);
         } else {
             return response()->json(['message' => trans('messages.SOMETHING_WENT_WRONG')], 400);
         }
@@ -60,7 +64,7 @@ class SeedSowingController extends Controller
 
     public function details($id)
     {
-        $result = SeedSowing::where('id', '=', $id)->first();
+        $result = SeedsDispatch::where('id', '=', $id)->first();
         if (!empty($result)) {
             return response()->json(['status' => 'success', 'result' => $result], 200);
         } else {
@@ -70,7 +74,7 @@ class SeedSowingController extends Controller
 
     public function updateStatus(Request $request)
     {
-        $query = SeedSowing::where('id', $request->id)->first();
+        $query = SeedsDispatch::where('id', $request->id)->first();
         if (!empty($query)) {
             if ($query->status == 'Y') {
                 $query->status = 'N';
@@ -89,8 +93,8 @@ class SeedSowingController extends Controller
         $offset     = (int) trim($request->input('offset'));
         $limit      = (int) trim($request->input('limit'));
         $index      = Helper::getIndexWithLimit($offset, $limit);
-        $list       = SeedSowing::list($index, $limit, $request);
-        $count      = SeedSowing::list(-1, $limit, $request);
+        $list       = SeedsDispatch::list($index, $limit, $request);
+        $count      = SeedsDispatch::list(-1, $limit, $request);
         $nextOffset = Helper::getWithLimitNextOffset($offset, count($list), $limit);
         return response()->json(['count' => $count, 'next_offset' => $nextOffset, 'list' => $list ?? []], 200);
     }
