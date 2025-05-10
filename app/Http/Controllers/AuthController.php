@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use App\Helpers\Helper;
 use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
@@ -72,5 +73,47 @@ class AuthController extends Controller
         } else {
             return response()->json(['message' => trans('messages.NO_RECORD_FOUND'), 'status' => trans('messages.ERROR')], 400);
         }
+    }
+
+    public function farmerList()
+    {
+        $farmerList = User::where('role', 'Farmer')->get();
+        if (!empty($farmerList)) {
+            return response()->json(['status' => 'success', 'message' => 'ok', 'result' => $farmerList], 200);
+        } else {
+            return response()->json(['message' => trans('messages.NO_RECORD_FOUND'), 'status' => trans('messages.ERROR')], 400);
+        }
+    }
+
+    public function addFarmer(Request $request)
+    {  
+        $request->validate([
+            'name'     => 'required|string|max:255',
+        ]);
+        $email = 'farmer@yopmail.com';
+        $password = md5(123456);
+
+        $farmer =[
+            'name'       => $request->name,
+            'email'      => $email,
+            'contact'    => $request->name,
+            'address'    => $request->name,
+            'password'   => $password,
+            'role'       => $request->role ?? 'Farmer',
+            'created_at' => Carbon::now()
+        ];
+        User::create($farmer);
+        return response()->json(['message' => 'User registered successfully'], 201);
+    }
+
+    public function farmerListPagination(Request $request)
+    {
+        $offset     = (int) trim($request->input('offset'));
+        $limit      = (int) trim($request->input('limit'));
+        $index      = Helper::getIndexWithLimit($offset, $limit);
+        $list       = User::list($index, $limit, $request);
+        $count      = User::list(-1, $limit, $request);
+        $nextOffset = Helper::getWithLimitNextOffset($offset, count($list), $limit);
+        return response()->json(['count' => $count, 'next_offset' => $nextOffset, 'list' => $list ?? []], 200);
     }
 }

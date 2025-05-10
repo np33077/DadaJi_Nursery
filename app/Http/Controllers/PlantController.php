@@ -89,4 +89,14 @@ class PlantController extends Controller
         $nextOffset = Helper::getWithLimitNextOffset($offset, count($list), $limit);
         return response()->json(['count' => $count, 'next_offset' => $nextOffset, 'list' => $list ?? []], 200);
     }
+
+    public function dropdownlist()
+    {
+        $plantlist = Plant::Dropdownlist();
+        if($plantlist->isEmpty()){
+            return response()->json(['list' => [] ], 200);
+        }
+        return response()->json(['list' => $plantlist ?? [] ], 200);
+
+    }
 }

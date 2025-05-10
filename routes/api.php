@@ -36,7 +36,7 @@ Route::group(['middleware' => 'auth:api'], function ($router) {
     // ========================== Labors  APIs ========================= //
 
     Route::post('/add-labor', [laborsController::class, 'add']);
-    Route::put('/edit-labor', [laborsController::class, 'edit']);
+    Route::put(' ', [laborsController::class, 'edit']);
     Route::get('/labor-pagination-list', [laborsController::class, 'paginationlist']);
     Route::get('/labor-details/{id}', [laborsController::class, 'details']);
     Route::put('/update-labor-status', [laborsController::class, 'updateStatus']);
@@ -46,6 +46,7 @@ Route::group(['middleware' => 'auth:api'], function ($router) {
     Route::post('/add-plant', [PlantController::class, 'add']);
     Route::put('/edit-plant', [PlantController::class, 'edit']);
     Route::get('/plant-pagination-list', [PlantController::class, 'paginationlist']);
+    Route::get('/plant-dropdown', [PlantController::class, 'Dropdownlist']);
     Route::get('/plant-details/{id}', [PlantController::class, 'details']);
     Route::put('/update-plant-status', [PlantController::class, 'updateStatus']);
 
@@ -78,4 +79,11 @@ Route::group(['middleware' => 'auth:api'], function ($router) {
     Route::get('/income-pagination-list', [IncomeController::class, 'paginationlist']);
     Route::get('/income-details/{id}', [IncomeController::class, 'details']);
     Route::put('/update-income-status', [IncomeController::class, 'updateStatus']);
+
+    // ========================== Farmer APIs ========================= //
+    Route::post('/save-farmer' , [AuthController::class, 'addFarmer']);
+    Route::get('/farmer-list-pagination' , [AuthController::class, 'farmerListPagination']);
+    Route::get('/farmer-list', [AuthController::class, 'farmerList']);
 });
+// Route::get('/login', [AuthController::class, 'login'])->name('login');
+

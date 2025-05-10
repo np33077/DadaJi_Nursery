@@ -10,6 +10,7 @@ class Labor extends Model
     use HasFactory;
     protected $table = "labors";
     public $timestamps = true;
+
     public static function list($index, $limit, $request)
     {
         $keyword  = $request->query('keyword');

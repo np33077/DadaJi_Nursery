@@ -40,4 +40,9 @@ class Plant extends Model
             return $query->count();
         }
     }
+
+    public static function Dropdownlist()
+    {
+        return self::select('id', 'plant_name')->where('status', 'Y')->get();
+    }
 }

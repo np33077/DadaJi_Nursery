@@ -49,8 +49,8 @@ class PlantBookingController extends Controller
         }
         $query  = PlantBooking::where('id', $request->id)->first();
         if (!empty($query)) {
-            $query->farmer_id      = $request->userId ?? $query->plant_id;
-            $query->plant_type     = $request->plant_id ?? $query->plant_id;
+            $query->farmer_id      = $request->farmer_id ?? $query->farmer_id;
+            $query->plant_type     = $request->plant_type ?? $query->plant_type;
             $query->quantity       = $request->quantity ?? $query->quantity;
             $query->booking_date   = $request->booking_date ?? $query->booking_date;
             $query->delivery_date  = $request->delivery_date ?? $query->delivery_date;

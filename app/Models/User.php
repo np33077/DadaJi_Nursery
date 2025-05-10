@@ -24,7 +24,10 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
+        'contact',
+        'address',
         'password',
+        'created_at',
     ];
 
     /**
@@ -56,8 +59,35 @@ class User extends Authenticatable
         $user_detail =  User::where('id', $user->id)->first();
         return $user_detail;
     }
+    public static function list($index, $limit, $request){
+        $keyword  = $request->query('keyword');
+        $sort_by  = $request->query('sort_by');
+        $order_by = $request->query('order_by');
+        $query    = self::select("*")->where('status', 'Y');
+        // if (!empty($keyword)) {
+        //     $query->where(function ($q) use ($keyword) {
+        //         $q->where("plant_name", 'LIKE', "%$keyword%");
+        //     });
+        // }
 
-    public function test()
+        if ($index != -1) {
+            if (!empty($sort_by) && !empty($order_by)) {
+                $query->orderBy($sort_by, $order_by);
+            } else {
+                $query->orderBy('created_at', 'desc');
+            }
+            if (!empty($limit)) {
+                $query->limit($limit);
+            } else {
+                $query->limit(config("constants.LIMIT"));
+            }
+            return $query->offset($index)
+                ->get();
+        } else {
+            return $query->count();
+        }
+    }
+    public function test($index, $limit, $request)
     {
         echo "helel-p";
         exit;
