@@ -22,7 +22,6 @@ class Income extends Model
         //         $q->where("name", 'LIKE', "%$keyword%");
         //     });
         // }
-
         if ($index != -1) {
             if (!empty($sort_by) && !empty($order_by)) {
                 $query->orderBy($sort_by, $order_by);
