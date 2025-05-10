@@ -101,12 +101,12 @@ Route::group(['middleware' => 'auth:api'], function ($router) {
     Route::put('/update-seedsdispatch-status', [SeedsDispatchController::class, 'updateStatus']);
 
     // ========================== Seeds Purchasing Controller APIs ========================= //
-
-    Route::post('/add-seedsdispatch', [SeedsPurchasingController::class, 'add']);
-    Route::put('/edit-seedsdispatch', [SeedsPurchasingController::class, 'edit']);
-    Route::get('/seedsdispatch-pagination-list', [SeedsPurchasingController::class, 'paginationlist']);
-    Route::get('/seedsdispatch-details/{id}', [SeedsPurchasingController::class, 'details']);
-    Route::put('/update-seedsdispatch-status', [SeedsPurchasingController::class, 'updateStatus']);
+    // pending
+    Route::post('/add-seedspurchasing', [SeedsPurchasingController::class, 'add']);
+    Route::put('/edit-seedspurchasing', [SeedsPurchasingController::class, 'edit']);
+    Route::get('/seedspurchasing-pagination-list', [SeedsPurchasingController::class, 'paginationlist']);
+    Route::get('/seedspurchasing-details/{id}', [SeedsPurchasingController::class, 'details']);
+    Route::put('/update-seedspurchasing-status', [SeedsPurchasingController::class, 'updateStatus']);
 
     // ========================== Farmer APIs ========================= //
     Route::post('/save-farmer' , [AuthController::class, 'addFarmer']);
